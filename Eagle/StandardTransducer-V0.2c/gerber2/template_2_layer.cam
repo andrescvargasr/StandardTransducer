@@ -1,0 +1,243 @@
+{
+    "author": {
+        "email": "camilo.vargas@correounivalle.edu.co",
+        "name": "Andres Vargas"
+    },
+    "description": {
+        "EN": "CAM job description goes here."
+    },
+    "output_type": "directory",
+    "outputs": [
+        {
+            "format_specifier": {
+                "decimal": 3,
+                "integer": 3
+            },
+            "output_type": "drill",
+            "outputs": [
+                {
+                    "drills": {
+                        "NPTH": true,
+                        "PTH": true,
+                        "VIA": true
+                    },
+                    "filename_format": "outputs/%N.TXT",
+                    "layers": {
+                        "from": 1,
+                        "to": 16
+                    },
+                    "name": "drill data",
+                    "type": "excellon"
+                }
+            ]
+        },
+        {
+            "filename_prefix": "outputs",
+            "format_specifier": {
+                "decimal": 4,
+                "integer": 3
+            },
+            "generate_job_file": true,
+            "output_type": "gerber",
+            "outputs": [
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "top copper",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GTL",
+                    "layers": [
+                        1,
+                        17,
+                        18,
+                        20
+                    ],
+                    "milling": false,
+                    "name": "top copper",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                },
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "bottom copper",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GBL",
+                    "layers": [
+                        16,
+                        17,
+                        18,
+                        20
+                    ],
+                    "milling": false,
+                    "name": "bottom copper",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                },
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "padmask bottom",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GBP",
+                    "layers": [
+                        20,
+                        32
+                    ],
+                    "milling": false,
+                    "name": "padmask bottom",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                },
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "padmask top",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GTP",
+                    "layers": [
+                        20,
+                        31
+                    ],
+                    "milling": false,
+                    "name": "padmask top",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                },
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "solder mask top",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GTS",
+                    "layers": [
+                        20,
+                        29
+                    ],
+                    "milling": false,
+                    "name": "solder mask top",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                },
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "solder mask bottom",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GBS",
+                    "layers": [
+                        20,
+                        30
+                    ],
+                    "milling": false,
+                    "name": "solder mask bottom",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                },
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "silk bottom",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GBO",
+                    "layers": [
+                        20,
+                        22,
+                        26,
+                        200
+                    ],
+                    "milling": false,
+                    "name": "silk bottom",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                },
+                {
+                    "advanced_options": {
+                        "mirror": false,
+                        "offset_x": 0,
+                        "offset_y": 0,
+                        "rotate": false,
+                        "upside_down": false
+                    },
+                    "board_outline": false,
+                    "config": {
+                        "description": "silk top",
+                        "file_function": "Other"
+                    },
+                    "filename_format": "%PREFIX/%N.GTO",
+                    "layers": [
+                        20,
+                        21,
+                        25,
+                        201
+                    ],
+                    "milling": false,
+                    "name": "silk top",
+                    "polarity": "positive",
+                    "type": "gerber_layer"
+                }
+            ],
+            "version": "RS274X"
+        }
+    ],
+    "timestamp": "2018-02-22T12:13:37",
+    "type": "EAGLE CAM job",
+    "units": "metric",
+    "version": "8.6.1"
+}
