@@ -21152,8 +21152,8 @@ la lectura de este.</text>
 <instance part="R16" gate="G$1" x="271.78" y="124.46" rot="R180"/>
 <instance part="R18" gate="G$1" x="279.4" y="134.62" rot="R90"/>
 <instance part="Q3" gate="G$1" x="284.48" y="121.92"/>
-<instance part="IC2" gate="A" x="281.94" y="55.88" rot="MR180"/>
-<instance part="IC2" gate="B" x="342.9" y="60.96"/>
+<instance part="IC2" gate="A" x="345.44" y="60.96"/>
+<instance part="IC2" gate="B" x="281.94" y="55.88" rot="MR180"/>
 <instance part="IC2" gate="P" x="353.06" y="0" rot="R90"/>
 <instance part="Q1" gate="G$1" x="297.18" y="53.34"/>
 <instance part="R1" gate="G$1" x="299.72" y="71.12" rot="R90"/>
@@ -21614,15 +21614,15 @@ la lectura de este.</text>
 <label x="116.84" y="154.94" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="IC2" gate="B" pin="OUT"/>
-<wire x1="350.52" y1="60.96" x2="355.6" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="355.6" y1="60.96" x2="355.6" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="355.6" y1="53.34" x2="332.74" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="B" pin="-IN"/>
 <wire x1="332.74" y1="53.34" x2="332.74" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="332.74" y1="58.42" x2="335.28" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="355.6" y1="60.96" x2="358.14" y2="60.96" width="0.1524" layer="91"/>
 <label x="358.14" y="60.96" size="1.778" layer="95"/>
+<pinref part="IC2" gate="A" pin="-IN"/>
+<wire x1="337.82" y1="58.42" x2="332.74" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT"/>
+<wire x1="353.06" y1="60.96" x2="355.6" y2="60.96" width="0.1524" layer="91"/>
 <junction x="355.6" y="60.96"/>
 </segment>
 </net>
@@ -21941,47 +21941,40 @@ la lectura de este.</text>
 <pinref part="R19" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="N$2" class="0">
-<segment>
-<pinref part="Q1" gate="G$1" pin="G"/>
-<pinref part="IC2" gate="A" pin="OUT"/>
-<wire x1="294.64" y1="55.88" x2="289.56" y2="55.88" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$5" class="0">
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <pinref part="Q1" gate="G$1" pin="S"/>
 <wire x1="299.72" y1="66.04" x2="299.72" y2="63.5" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="-IN"/>
 <wire x1="299.72" y1="63.5" x2="299.72" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="274.32" y1="58.42" x2="271.78" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="271.78" y1="58.42" x2="271.78" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="271.78" y1="63.5" x2="299.72" y2="63.5" width="0.1524" layer="91"/>
 <junction x="299.72" y="63.5"/>
+<pinref part="IC2" gate="B" pin="-IN"/>
+<wire x1="274.32" y1="58.42" x2="271.78" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="IC2" gate="A" pin="+IN"/>
 <pinref part="R5" gate="G$1" pin="2"/>
-<wire x1="274.32" y1="53.34" x2="266.7" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="266.7" y1="53.34" x2="266.7" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="266.7" y1="55.88" x2="266.7" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="B" pin="+IN"/>
+<wire x1="266.7" y1="53.34" x2="266.7" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="53.34" x2="266.7" y2="53.34" width="0.1524" layer="91"/>
 <junction x="266.7" y="53.34"/>
 </segment>
 </net>
 <net name="SVANALOG" class="0">
 <segment>
-<pinref part="IC2" gate="B" pin="+IN"/>
-<wire x1="335.28" y1="63.5" x2="330.2" y2="63.5" width="0.1524" layer="91"/>
-<label x="330.2" y="63.5" size="1.778" layer="95" rot="MR0"/>
-</segment>
-<segment>
 <label x="152.4" y="152.4" size="1.778" layer="95" rot="MR0"/>
 <wire x1="170.18" y1="152.4" x2="152.4" y2="152.4" width="0.1524" layer="91"/>
 <pinref part="JP4" gate="A" pin="7"/>
+</segment>
+<segment>
+<pinref part="IC2" gate="A" pin="+IN"/>
+<wire x1="337.82" y1="63.5" x2="330.2" y2="63.5" width="0.1524" layer="91"/>
+<label x="330.2" y="63.5" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="RA1/2483" class="0">
@@ -22052,6 +22045,13 @@ la lectura de este.</text>
 <pinref part="U$4" gate="G$1" pin="PB4(ADC11)"/>
 <wire x1="114.3" y1="124.46" x2="116.84" y2="124.46" width="0.1524" layer="91"/>
 <label x="116.84" y="124.46" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="IC2" gate="B" pin="OUT"/>
+<pinref part="Q1" gate="G$1" pin="G"/>
+<wire x1="289.56" y1="55.88" x2="294.64" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
