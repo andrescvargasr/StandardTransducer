@@ -39,5 +39,7 @@ There are already a few external extra modules:
 ~~- gas flux and mix control with analogic valves, also works as a stand alone (in development phase).~~
 
 References:
--https://www.arduino.cc/en/Main/ArduinoBoardLeonardo
--https://github.com/greiman/ChNil
+
+-https://www.arduino.cc/en/Main/ArduinoBoardLeonardo.
+
+-https://github.com/greiman/ChNil.
