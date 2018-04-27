@@ -216,14 +216,14 @@ void setQualifier(uint16_t value) {
 // this method will check if there was a change in the error status and log it in this case
 boolean saveAndLogError(boolean isError, byte errorFlag) {
   if (isError) {
-    if (setParameterBit(PARAM_ERROR, errorFlag)) { // the status has changed
+    if (setParameterBit(FLAG_ERROR, errorFlag)) { // the status has changed
 #ifdef EVENT_LOGGING
       writeLog(EVENT_ERROR_FAILED, errorFlag);
 #endif
       return true;
     }
   } else {
-    if (clearParameterBit(PARAM_ERROR, errorFlag)) { // the status has changed
+    if (clearParameterBit(FLAG_ERROR, errorFlag)) { // the status has changed
 #ifdef EVENT_LOGGING
       writeLog(EVENT_ERROR_RECOVER, errorFlag);
 #endif
@@ -234,12 +234,12 @@ boolean saveAndLogError(boolean isError, byte errorFlag) {
 }
 
 boolean isError(int filter) {
-  if ((getParameter(PARAM_ERROR) & filter) != 0) return true;
+  if ((getParameter(FLAG_ERROR) & filter) != 0) return true;
   return false;
 }
 
 boolean isError() {
-  return (getParameter(PARAM_ERROR)!= 0);
+  return (getParameter(FLAG_ERROR)!= 0);
 }
 
 boolean getStatus(byte statusFlag) {

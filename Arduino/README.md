@@ -15,7 +15,7 @@
 - h: (h)elp
 Display principal commands for configuration & visualization of the Transducer.
 - c: (c)onfiguration
-Display all Parameter names and values.
+Display all Parameter names and his values.
 - u: (u)tilities
 
 | SUBCOMMAND | DESCRIPTION      |
@@ -28,13 +28,10 @@ Display all Parameter names and values.
 | uz         | EEPROM           |
 
 - i: (i)2c
-Configuration for I2C communication, actually is only for controll of the OLED 128x32.
+Configuration for I2C communication, actually is only for control of the OLED 128x32.
 - o: (o)ne-wire
-Configuration for One-wire sensors, actually is for Temperature & Humidity sensors DS18B20.
+Configuration for One-wire sensors, actually is for Temperature DS18B20 and Temperature & Humidity DHT22 (AM2302) sensors.
 - p: (p)arameters
 Display parameters of epoch, time and I2C.
 - s: (s)tatus
-Display flags: Status, Enabled and Error.
-
-## Flags
-- FLAG_STATUS
+Display flags: Status, Enabled and Error in bit mode.

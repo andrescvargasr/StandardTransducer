@@ -23,7 +23,7 @@
 /************************************************************************/
 #define PRESSURE_SENSOR   // MPX53D pressure sensor
 #define TEMP_SENSOR     // PT100 temperature sensor
-#define ONE_WIRE_SENSORS  // DS18B20 temperature and humidity sensor
+#define ONE_WIRE_SENSORS  // DS18B20 temperature sensor
 #define LCD         // 128x32 OLED display with I2C communication
 #define BUTTONS       // Resistive buttons
 #define BLUETOOTH     // BLE
@@ -103,8 +103,17 @@
   #define PARAM_ANALOG_TEMP 1 // B - Analog Temperature
 #endif
 #ifdef ONE_WIRE_SENSORS
-  #define PARAM_DIGITAL_TEMP  2 // C - Digital Temperature
-  #define PARAM_DIGITAL_HUM 3 // D - Digital Humidity
+  #define PARAM_DIGITAL_TEMP_1  2 // C - Digital Temperature:
+                                  // Digital sensor have a 64-bit ID and
+                                  // 8-bit family ID, this identifies the
+                                  // device type and functionality.
+  #define PARAM_DIGITAL_TEMP_2  3
+  #define PARAM_DIGITAL_TEMP_3  4
+  #define PARAM_DIGITAL_TEMP_4  5
+  
+  #define PARAM_DIGITAL_HUMI_1  6 // D - Digital Humidity
+                                  // If use DHT22 (AM2302), humidity is
+                                  // available to read.
 #endif
 
 #ifdef BUTTONS            // E - Buttons states

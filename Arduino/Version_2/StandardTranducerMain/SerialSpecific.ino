@@ -46,11 +46,11 @@ void processSpecificCommand(char* data, char* paramValue, Print* output) {
         output->println(getParameterBit(FLAG_ENABLED, i));
       }
       output->print(F("Error: "));
-      output->println(getParameter(PARAM_ERROR));
+      output->println(getParameter(FLAG_ERROR));
       for (byte i = 0; i < 6; i++) {
         output->print(i);
         output->print(": ");
-        output->println(getParameterBit(PARAM_ERROR, i));
+        output->println(getParameterBit(FLAG_ERROR, i));
       }
       break;
 #ifdef FOOD_CTRL

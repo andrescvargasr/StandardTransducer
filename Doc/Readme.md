@@ -1,12 +1,12 @@
 # Standard Transducer Versión 2.0
 ## Basado en el hardware: StandardTransducer-V0.2dQ
 
-### EEPROM
-El *Standard Transducer* (en adelante STrans) consta de un conjunto de **14** parámetros, los cuales tienen un tamaño de 2 bytes correspondientes a un valor tipo int. Igualmente, la memoria EEPROM del ATmega32u4 tiene una capacidad de almacenamiento de 1024 bytes, si tenemos en cuenta el tamaño de los datos que serán almacenados, entonces es posible almacenar:
+## EEPROM
+El *Standard Transducer* (en adelante STrans) consta de un conjunto de **15** parámetros, los cuales tienen un tamaño de 2 bytes correspondientes a un valor tipo int. Igualmente, la memoria EEPROM del ATmega32u4 tiene una capacidad de almacenamiento de 1024 bytes, si tenemos en cuenta el tamaño de los datos que serán almacenados, entonces es posible almacenar:
 
 1024 bytes / 2 bytes = 512 bloques
 
-La cantidad de **512 bloques de datos de 2 bytes**, donde **14** pertenecen a los parámetros actuales.
+La cantidad de **512 bloques de datos de 2 bytes**, donde **12** pertenecen a los parámetros actuales y **3** pertenecen a las banderas de estados, habilitación y errores para un total de **15** variables almacenadas.
 
 #### Parámetros
 A continuación, se presenta la tabla de parámetros con los que se cuenta actualmente:
@@ -14,8 +14,8 @@ A continuación, se presenta la tabla de parámetros con los que se cuenta actua
 | ID | P | NAME                 | DESCRIPTION                              |
 | -- | - | -------------------- | ---------------------------------------- |
 | 0  | A | PARAM_PRESSURE       | Pressure of the system.                  |
-| 2  | C | PARAM_DIGITAL_TEMP_1 | Digital temperature of the sensor 1.     |
 | 1  | B | PARAM_ANALOG_TEMP    | Analog temperature of the system.        |
+| 2  | C | PARAM_DIGITAL_TEMP_1 | Digital temperature of the sensor 1.     |
 | 3  | D | PARAM_DIGITAL_TEMP_2 | Digital temperature of the sensor 2.     |
 | 4  | E | PARAM_DIGITAL_TEMP_3 | Digital temperature of the sensor 3.     |
 | 5  | F | PARAM_DIGITAL_TEMP_4 | Digital temperature of the sensor 4.     |
@@ -52,7 +52,7 @@ Existen 3 variables que se encargan de manejar el estado del STrans, a saber:
 
 **FLAG_ENABLED** permite activar o desactivar determinadas funciones del _STrans_. Por ejemplo, es posible desactivar la lectura del sensor análogo de temperatura.
 
-##### FLAG_STATUS
+#### FLAG_STATUS
 **FLAG_STATUS** presenta las funciones que están activas actualmente, dispone de **16 bits de datos**. Actualmente, cada uno de esos bits repreentan un estado de cada función programada en el _STrans_. ~~Se compone de diferentes *bits* que pueden ser habilitados/deshabilitados usando el método *start()* y *stop()*. Es posible comprobar el estado de una función usando *getStatus*~~.
 
 | Bit | FLAG_STATUS            | Comment |
@@ -68,7 +68,7 @@ Existen 3 variables que se encargan de manejar el estado del STrans, a saber:
 | 8   | FLAG_OLED_CTRL         |  |
 | 9   | FLAG_LORA_RN2483       |  |
 | 10  | FLAG_LORA_RA_01        |  |
-| 11  | FLAG_ BLUETOOTH        |  |
+| 11  | FLAG_BLUETOOTH         |  |
 | 12  | FLAG_COMMUNICATION     |  |
 | 13  | FLAG_A0                |  |
 | 14  | FLAG_BATTERY           |  |
@@ -91,11 +91,11 @@ Existen 3 variables que se encargan de manejar el estado del STrans, a saber:
 | 7   | FLAG_EN_ANALOG_SENSORS  |  |
 | 8   | FLAG_EN_DIGITAL_SENSORS |  |
 | 9   | FLAG_EN_BUTTONS         |  |
-| 10  | FLAG_EN_OLED            | * * |
+| 10  | FLAG_EN_OLED            |  |
 | 11  | FLAG_EN_BATTERY         |  |
 | 12  | FLAG_EN_REGULATOR       |  |
 | 13  | FLAG_EN_A0              |  |
-| 14  | FLAG_EN_COMMUNICATION   | * * |
+| 14  | FLAG_EN_COMMUNICATION   |  |
 
 Debido a su composición en *bits*, cada uno puede ser habilitado/deshabilitado usando el método *start()* y *stop()*. Es posible comprobar el estado de una función usando *getStatus*.
 
@@ -121,4 +121,4 @@ Z 16640 [Enter]
 | 10  | FLAG_ERROR_BUTTON_Z_N     | Pulsación sostenida en el botón Z-. |
 | 11  | FLAG_ERROR_OLED           | Falla en la pantalla OLED (no hay respuesta). |
 | 12  | FLAG_ERROR_A0             | Falla en la lectura del sensor. |
-| 12  | FLAG_ERROR_COMMUNICATION  | Falla en la comunicación (no hay ningún módulo de comunicación conectado). |
+| 13  | FLAG_ERROR_COMMUNICATION  | Falla en la comunicación (no hay ningún módulo de comunicación conectado). |
