@@ -22,7 +22,7 @@ A continuación, se presenta la tabla de parámetros con los que se cuenta actua
 | 6  | G | PARAM_DIGITAL_HUMI_1 | Digital humidity of the sensor 1.        |
 | 7  | H | PARAM_BUTTONS        | Button state of S+, S-, Z+ and Z-.       |
 | 8  | I | PARAM_OLED           | Estado de la pantalla OLED.              |
-| 9  | J |                      |                                          |
+| 9  | J | PARAM_WIRELESS       | Comunicación inalámbrica habilitada.     |
 | 10 | K |                      |                                          |
 | 11 | L |                      |                                          |
 | 12 | M |                      |                                          |
@@ -41,6 +41,22 @@ A continuación, se presenta la tabla de parámetros con los que se cuenta actua
 | 25 | Z | PARAM_ENABLED        | Características disponibles del sistema. |
 
 Cada uno de estos parámetros se encargan de presentar el estado actual de cada una de las opciones disponibles en el sistema; además, las últimas opciones se encargan de presentar un compendio que incluye los errores producidos durante el funcionamiento del transductor (**PARAM_ERROR**), el estado de todas las variables sensibles para el usuario (**PARAM_STATUS**) y la posibilidad de identificar cuáles características se encuentran actualmente habilitadas (**PARAM_ENABLED**).
+
+Existen dos casos especiales de parámetros, **PARAM_BUTTONS** y **PARAM_WIRELESS**, los cuales representan el estado de varias opciones, de modo que **PARAM_BUTTONS** entrega los estados de los botones _Z+_, _Z-_, _S+_ y _S-_, y **PARAM_WIRELESS** entrega la disponibilidad de los sitemas de comunicación _Bluetooth_, _LoRa-Ra1_, _LoRa-RN2483_ y _LoRa-RN2903_; todo esto implica que si los botones están disponibles o algún tipo de comunicación, estos parámetros entregarán un 1 según su posición, siguiendo la tabla a continuación:
+
+| PARAM_BUTTONS | Bit | Botón activado en PARAM_BUTTONS |
+| ------------- | --- | --------------------------------- |
+| PARAM_S_P     | 0   | 0b00000001                        |
+| PARAM_S_N     | 1   | 0b00000010                        |
+| PARAM_Z_P     | 2   | 0b00000100                        |
+| PARAM_S_N     | 3   | 0b00001000                        |
+
+| PARAM_WIRELESS    | Bit | Comunicación disponible en PARAM_BUTTONS |
+| ----------------- | --- | ---------------------------------------- |
+| PARAM_BLUETOOTH   | 0   | 0b00000001                               |
+| PARAM_LORA_RA1    | 1   | 0b00000010                               |
+| PARAM_LORA_RN2483 | 2   | 0b00000100                               |
+| PARAM_LORA_RN2903 | 3   | 0b00001000                               |
 
 #### Estado del transductor
 
@@ -66,10 +82,10 @@ Existen 3 variables que se encargan de manejar el estado del STrans, a saber:
 | 6   | FLAG_DIG_HUMIDITY_CTRL |  |
 | 7   | FLAG_BUTTONS_CTRL      |  |
 | 8   | FLAG_OLED_CTRL         |  |
-| 9   | FLAG_LORA_RN2483       |  |
+| 9   | FLAG_BLUETOOTH         |  |
 | 10  | FLAG_LORA_RA_01        |  |
-| 11  | FLAG_BLUETOOTH         |  |
-| 12  | FLAG_COMMUNICATION     |  |
+| 11  | FLAG_LORA_RN2483       |  |
+| 12  | FLAG_LORA_RN2903       |  |
 | 13  | FLAG_A0                |  |
 | 14  | FLAG_BATTERY           |  |
 | 15  | FLAG_REGULATOR         |  |

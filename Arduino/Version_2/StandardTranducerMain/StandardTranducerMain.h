@@ -24,7 +24,7 @@
 #define PRESSURE_SENSOR   // MPX53D pressure sensor
 #define TEMP_SENSOR     // PT100 temperature sensor
 #define ONE_WIRE_SENSORS  // DS18B20 temperature sensor
-#define LCD         // 128x32 OLED display with I2C communication
+#define OLED         // 128x32 OLED display with I2C communication
 #define BUTTONS       // Resistive buttons
 #define BLUETOOTH     // BLE
 #define LORA
@@ -86,8 +86,8 @@
   #define VOPA      26  // Enable voltage source for OPA
 #endif
 
-#ifdef LCD
-  #define VLCD      22  // Enable LCD voltage source
+#ifdef OLED
+  #define ENOLED      22  // Enable LCD voltage source
 #endif
 
 #ifdef LORA
@@ -104,20 +104,21 @@
   #define PARAM_ANALOG_TEMP 1 // B - Analog Temperature
 #endif
 #ifdef ONE_WIRE_SENSORS
-  #define PARAM_DIGITAL_TEMP_1  2 // C - Digital Temperature:
+  #define PARAM_DIGITAL_TEMP_1  2 // C - Digital Temperature 1:
                                   // Digital sensor have a 64-bit ID and
                                   // 8-bit family ID, this identifies the
                                   // device type and functionality.
-  #define PARAM_DIGITAL_TEMP_2  3
-  #define PARAM_DIGITAL_TEMP_3  4
-  #define PARAM_DIGITAL_TEMP_4  5
+  #define PARAM_DIGITAL_TEMP_2  3 // D - Digital Temperature 2
+  #define PARAM_DIGITAL_TEMP_3  4 // E - Digital Temperature 3
+  #define PARAM_DIGITAL_TEMP_4  5 // F - Digital Temperature 4
   
-  #define PARAM_DIGITAL_HUMI_1  6 // D - Digital Humidity
+  #define PARAM_DIGITAL_HUMI_1  6 // G - Digital Humidity
                                   // If use DHT22 (AM2302), humidity is
                                   // available to read.
 #endif
 
-#ifdef BUTTONS            // E - Buttons states
+#ifdef BUTTONS            
+  #define PARAM_BUTTONS 7         // H - Buttons states   
   #define PARAM_S_P     0
   #define PARAM_S_N     1
   #define PARAM_Z_P     2
@@ -125,7 +126,13 @@
   #define MASK_BUTTONS    0b00001111  // Where are the bit
 #endif
 
+#ifdef OLED
+  #define PARAM_OLED      8       // I - OLED state.
+#endif
 
+#define PARAM_ERROR       23
+#define PARAM_STATUS      24
+#define PARAM_ENABLED     25
 
 /************************************************************************/
 /* FLAG DEFINITION                                                      */
@@ -142,8 +149,6 @@
 //#define FLAG_TEMP_TARGET_RANGE_ERROR   4   // target temperature is outside range
 //#define MASK_TEMP_ERROR                0b00011111  // where are the bit for temperature error
 
-// #define SHOW_MENU_HELP 1 // if we don't show the help we spare a lot of memory
-
 
 /******************************
   SERIAL, LOGGER AND DEBUGGERS
@@ -159,10 +164,10 @@
 //#define DEBUG_ONEWIRE      1
 //#define DEBUG_PID          1
 
-#ifdef THR_LINEAR_LOGS
-  #define FLASH_SELECT A3 //Flash SS_SPI
-  #define LOG_INTERVAL 10  //Interval in (s) between logs logger
-#endif
+//#ifdef THR_LINEAR_LOGS
+//  #define FLASH_SELECT A3 //Flash SS_SPI
+//  #define LOG_INTERVAL 10  //Interval in (s) between logs logger
+//#endif
 
 
 
@@ -175,7 +180,6 @@ uint16_t findSectorOfN( );
 uint8_t toHex(Print* output, byte value);
 uint8_t toHex(Print* output, int value);
 uint8_t toHex(Print* output, long value);
-
 
 
 #endif /* STANDARDTRANDUCERMAIN_H_ */
