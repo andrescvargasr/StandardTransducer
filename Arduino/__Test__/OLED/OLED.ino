@@ -29,6 +29,36 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define YPOS 1
 #define DELTAY 2
 
+#ifdef TX_RX_LED_INIT
+#undef TX_RX_LED_INIT
+#define TX_RX_LED_INIT  DDRF |= (1<<5), DDRF |= (1<<7)
+#endif
+
+#ifdef TXLED0
+#undef TXLED0
+#define TXLED0      -1
+#endif
+
+#ifdef TXLED1
+#undef TXLED1
+#define TXLED1      -1
+#endif
+
+#ifdef RXLED0
+#undef RXLED0
+#define RXLED0      -1
+#endif
+
+#ifdef RXLED1
+#undef RXLED1
+#define RXLED1      -1
+#endif
+
+#define OLED_INIT     DDRD |= (1<<5)
+#define PIN_OLED 30
+
+#define OLED1			PORTD &= ~(1<<5)
+#define OLED0		  PORTD |= (1<<5)
 
 #define LOGO16_GLCD_HEIGHT 16
 #define LOGO16_GLCD_WIDTH  16
@@ -77,8 +107,10 @@ void setup()   {
   //DDRD |= ((1<<PIND5)|(1<<PIND7));
   //PORTD &= ~(1<<PIND5);
   //PORTD |= (1<<PIND7);
-  pinMode(LED_BUILTIN_TX, OUTPUT);
-  digitalWrite(LED_BUILTIN_TX, LOW);
+  //pinMode(LED_BUILTIN_TX, OUTPUT);
+  //digitalWrite(LED_BUILTIN_TX, LOW);
+  OLED_INIT;
+  OLED1;
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
@@ -215,6 +247,9 @@ void testdrawbitmap(const uint8_t *bitmap, uint8_t w, uint8_t h) {
     Serial.print(" dy: ");
     Serial.println(icons[f][DELTAY], DEC);
   }
+
+  delay(100);
+  OLED1;
 
   while (1) {
     // draw each icon

@@ -30,6 +30,7 @@
 #define LORA
 #define LORA_RA1      // LoRa Ra-01 communication module
 #define LORA_RN2483     // RN2483 communication module
+#define LORA_RN2903   //RN2903 communication module
 
 #ifdef PRESSURE_SENSOR || TEMP_SENSOR
   #define ANALOG_SENSORS  // Analog sensors is present
