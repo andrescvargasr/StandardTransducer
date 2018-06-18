@@ -1,4 +1,4 @@
-//#include "STansMain.h"
+#include "STransMain.h"
 
 /************************************************************************/
 /* This code run OLED display on ChiNil RTOS.                           */
@@ -8,9 +8,9 @@
 #define F_CPU 8000000UL //Lilypad USB Bootloader
 
 #include "ChNil.h"
-//#include "STransMain.h"
 //#include "Parameters.h"
 #include "OLED.h"
+
 
 volatile uint16_t count = 0;
 
@@ -24,9 +24,9 @@ SEMAPHORE_DECL(oneSlot, 1);
 /* SETUP                                                                */
 /************************************************************************/
 void setup() {
-  //chFillStacks();
-  // Start ChiNil RTOS.
-  chBegin();
+    //chFillStacks();
+    // Start ChiNil RTOS.
+    chBegin();
 }
 
 /************************************************************************/
@@ -35,4 +35,61 @@ void setup() {
 // Loop is the idle thread.  The idle thread must not invoke any
 // kernel primitive able to change its state to not runnable.
 void loop() {
+}
+
+/************************************************************************/
+/* FUNCTIONS                                                            */
+/************************************************************************/
+void pinPortMode(uint8_t pin, uint8_t mode)
+{
+  uint8_t bit = pinPortToBitMask(pin);
+  uint8_t port = pinToPort(pin);
+  volatile uint8_t *reg, *out;
+
+  if (port == NOT_A_PIN) return;
+
+  // JWS: can I let the optimizer do this?
+  reg = portModeRegister(port);
+  out = portOutputRegister(port);
+
+  if (mode == INPUT) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *reg &= ~bit;
+    *out &= ~bit;
+    SREG = oldSREG;
+    } else if (mode == INPUT_PULLUP) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *reg &= ~bit;
+    *out |= bit;
+    SREG = oldSREG;
+    } else {
+    uint8_t oldSREG = SREG;
+    cli();
+    *reg |= bit;
+    SREG = oldSREG;
+  }
+}
+
+void pinPortWrite(uint8_t pin, uint8_t val)
+{
+  uint8_t bit = pinPortToBitMask(pin);
+  uint8_t port = pinToPort(pin);
+  volatile uint8_t *out;
+
+  if (port == NOT_A_PIN) return;
+
+  out = portOutputRegister(port);
+
+  uint8_t oldSREG = SREG;
+  cli();
+
+  if (val == LOW) {
+    *out &= ~bit;
+    } else {
+    *out |= bit;
+  }
+
+  SREG = oldSREG;
 }

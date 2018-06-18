@@ -79,7 +79,7 @@ Existen 3 variables que se encargan de manejar el estado del STrans, a saber:
 | 3   | FLAG_DIG_TEMP_2_CTRL   |  |
 | 4   | FLAG_DIG_TEMP_3_CTRL   |  |
 | 5   | FLAG_DIG_TEMP_4_CTRL   |  |
-| 6   | FLAG_DIG_HUMIDITY_CTRL |  |
+| 6   | FLAG_DIG_HUMI_1_CTRL   |  |
 | 7   | FLAG_BUTTONS_CTRL      |  |
 | 8   | FLAG_OLED_CTRL         |  |
 | 9   | FLAG_BLUETOOTH         |  |
@@ -103,15 +103,16 @@ Existen 3 variables que se encargan de manejar el estado del STrans, a saber:
 | 3   | FLAG_EN_DIG_TEMP_2      |  |
 | 4   | FLAG_EN_DIG_TEMP_3      |  |
 | 5   | FLAG_EN_DIG_TEMP_4      |  |
-| 6   | FLAG_EN_DIG_HUMIDITY    |  |
-| 7   | FLAG_EN_ANALOG_SENSORS  |  |
-| 8   | FLAG_EN_DIGITAL_SENSORS |  |
-| 9   | FLAG_EN_BUTTONS         |  |
-| 10  | FLAG_EN_OLED            |  |
-| 11  | FLAG_EN_BATTERY         |  |
-| 12  | FLAG_EN_REGULATOR       |  |
+| 6   | FLAG_EN_DIG_HUMI_1_CTRL |  |
+| 7   | FLAG_EN_BUTTONS         |  |
+| 8   | FLAG_EN_OLED            |  |
+| 9   | FLAG_EN_BLUETOOTH       |  |
+| 10  | FLAG_EN_LORA_RA_01      |  |
+| 11  | FLAG_EN_LORA_RN2483     |  |
+| 12  | FLAG_EN_LORA_RN2903     |  |
 | 13  | FLAG_EN_A0              |  |
-| 14  | FLAG_EN_COMMUNICATION   |  |
+| 14  | FLAG_EN_BATTERY         |  |
+| 15  | FLAG_EN_REGULATOR       |  |
 
 Debido a su composición en *bits*, cada uno puede ser habilitado/deshabilitado usando el método *start()* y *stop()*. Es posible comprobar el estado de una función usando *getStatus*.
 
@@ -130,11 +131,7 @@ Z 16640 [Enter]
 | 3   | FLAG_ERROR_DIG_TEMP_2     | Falla en la sonda digital de temperatura 2 (no hay respuesta). |
 | 4   | FLAG_ERROR_DIG_TEMP_3     | Falla en la sonda digital de temperatura 3 (no hay respuesta). |
 | 5   | FLAG_ERROR_DIG_TEMP_4     | Falla en la sonda digital de temperatura 4 (no hay respuesta). |
-| 6   | FLAG_ERROR_DIG_HUMIDITY   | Falla en la medición de humedad (dato inválido).  |
-| 7   | FLAG_ERROR_BUTTON_S_P     | Pulsación sostenida en el botón S+. |
-| 8   | FLAG_ERROR_BUTTON_S_N     | Pulsación sostenida en el botón S-. |
-| 9   | FLAG_ERROR_BUTTON_Z_P     | Pulsación sostenida en el botón Z+. |
-| 10  | FLAG_ERROR_BUTTON_Z_N     | Pulsación sostenida en el botón Z-. |
-| 11  | FLAG_ERROR_OLED           | Falla en la pantalla OLED (no hay respuesta). |
-| 12  | FLAG_ERROR_A0             | Falla en la lectura del sensor. |
-| 13  | FLAG_ERROR_COMMUNICATION  | Falla en la comunicación (no hay ningún módulo de comunicación conectado). |
+| 6   | FLAG_ERROR_DIG_HUMI_1     | Falla en la medición de humedad (dato inválido).  |
+| 7  | FLAG_ERROR_OLED           | Falla en la pantalla OLED (no hay respuesta). |
+| 8  | FLAG_ERROR_COMMUNICATION  | Falla en la comunicación (no hay ningún módulo de comunicación conectado). |
+| 9  | FLAG_ERROR_A0             | Falla en la lectura del sensor. |

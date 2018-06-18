@@ -4,9 +4,16 @@
  * Created: 13/06/2018 4:26:58 p. m.
  *  Author: camil
  */ 
+
+#ifdef OLED
+
+#define THR_OLED
+
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
+#include "STransMain.h"
 
 #define OLED_RESET -1 // Reset pin is not necessary
 Adafruit_SSD1306 display(OLED_RESET);
@@ -35,8 +42,10 @@ THD_FUNCTION(ThrOLED, arg) {
   //pinMode(PIN_OLED, OUTPUT);
   //digitalWrite(LED_BUILTIN_TX, LOW);
   //digitalWrite(PIN_OLED, LOW);
-  OLED_INIT;
-  OLED1;
+  //OLED_INIT;
+  //OLED1;
+  pinPortMode(ENOLED,OUTPUT);
+  pinPortWrite(ENOLED,LOW);
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
@@ -58,7 +67,9 @@ THD_FUNCTION(ThrOLED, arg) {
     chSemWait(&oneSlot);
     {
       delay(100);
-      OLED1;
+      //OLED1;
+      pinPortWrite(ENOLED,LOW);
+      
       display.clearDisplay();
       //chSemSignal(&oneSlot);
 
@@ -87,3 +98,5 @@ void testdrawchar(void) {
     display.display();
     chThdSleepMilliseconds(1);
 }
+
+#endif
