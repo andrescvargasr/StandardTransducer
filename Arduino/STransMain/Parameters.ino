@@ -24,7 +24,7 @@
 #include "ChNil.h"
 //#include "BioMain.h"
 
-#define MAX_PARAM 52   // If the MAX_PARAM change you need to change the pointer in the EEPROM
+#define MAX_PARAM 26   // If the MAX_PARAM change you need to change the pointer in the EEPROM
 
 // Definition of all events to be logged
 #define EVENT_STATUS_ENABLE             3
@@ -60,6 +60,22 @@
 
 int parameters[MAX_PARAM];
 
+/*
+  This will take time, around 4 ms
+  This will also use the EEPROM that is limited to 100000 writes
+*/
+void setAndSaveParameter(byte number, int value) {
+  parameters[number] = value;
+  //The address of the parameter is given by : EE_START_PARAM+number*2
+  eeprom_write_word((uint16_t*) EE_START_PARAM + number, value);
+}
+
+void printParameters(Print* output) {
+  for (byte i = 0; i < MAX_PARAM; i++) {
+    printParameter(output, i);
+  }
+}
+
 void printParameter(Print* output, byte number) {
   output->print(number);
   output->print("-");
@@ -70,15 +86,15 @@ void printParameter(Print* output, byte number) {
   }
   output->print((char)(number - floor(number / 26) * 26 + 65));
   output->print(": ");
-  output->println(parameters[number]);
+  output->println(parameters[number]); 
 }
 
-/*
-  This will take time, around 4 ms
-  This will also use the EEPROM that is limited to 100000 writes
-*/
-void setAndSaveParameter(byte number, int value) {
-  parameters[number] = value;
-  //The address of the parameter is given by : EE_START_PARAM+number*2
-  eeprom_write_word((uint16_t*) EE_START_PARAM + number, value);
+int getParameter(byte number) {
+  return parameters[number];
 }
+
+boolean getParameterBit(byte number, byte bitToRead) {
+  // return (bitRead(parameters[number], bitToRead) == 1) ? true : false;
+  return (parameters[number] >> bitToRead ) & 1;
+}
+

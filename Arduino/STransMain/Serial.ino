@@ -155,14 +155,11 @@ void printResult(char* data, Print* output) {
     /* ========================================
        GENERAL AND REQUIRED PARAMETERS
       ========================================*/
-    case 'c':
-      if (paramValuePosition > 0);
-      //printCompactParameters(output, atoi(paramValue));
-      else
-        //printCompactParameters(output);
-        break;
+    case 'f':
+      processFlagsCommand(data[1], paramValue, output);
+    break;
     case 'h':
-      printHelp(output);
+      printHelpMenu(output);
       break;
     //Changed for (p)arameters
     //case 's':
@@ -170,7 +167,7 @@ void printResult(char* data, Print* output) {
       //break;
     case 'p':
       // Imprimir todos los parámetros según la función en Parameters
-      //printParameters(output);
+      printParameters(output);
     break;
     case 'u':
       //processUtilitiesCommand(data[1], paramValue, output);
@@ -181,9 +178,10 @@ void printResult(char* data, Print* output) {
   output->println("");
 }
 
-void printHelp(Print* output) {
+void printHelpMenu(Print* output) {
   //#ifdef SHOW_MENU_HELP
-  output->println(F("h - (h)elp"));
+  output->println(F("f - (f)lags"));
+  output->println(F("h - (h)elp")); 
   output->println(F("p - (p)arameters"));
   output->println(F("u - (u)tilities"));
 
@@ -206,6 +204,176 @@ void printSpecificHelp(Print* output) {
     //output->println(F("(w)eight"));
     //#endif
 }
+
+void processSpecificCommand(char* data, char* paramValue, Print* output) {
+  switch (data[0]) {
+    #ifdef THR_LORA
+    case 'a':
+    //processLoraCommand(data[1], paramValue, output);
+    break;
+    #endif
+    case 'g':
+      printGeneralParameters(output);
+    break;
+
+    case 'n':
+      output->print(F("Status: "));
+      output->println(getParameter(FLAG_STATUS));
+      for (byte i = 0; i < 16; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_STATUS, i));
+      }
+      output->print(F("Enabled: "));
+      output->println(getParameter(FLAG_ENABLED));
+      for (byte i = 0; i < 3; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_ENABLED, i));
+      }
+      output->print(F("Error: "));
+      output->println(getParameter(FLAG_ERROR));
+      for (byte i = 0; i < 6; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_ERROR, i));
+      }
+    break;
+    #ifdef FOOD_CTRL
+    case 'w':
+    //processWeightCommand(data[1], paramValue, output);
+    break;
+    #endif
+  }
+}
+
+void processFlagsCommand(char command, char* paramValue, Print* output) {
+  switch (command) {
+    case 'f':
+      output->print(F("Status: "));
+      output->println(getParameter(FLAG_STATUS));
+      for (byte i = 0; i < 16; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_STATUS, i));
+      }
+      output->print(F("Enabled: "));
+      output->println(getParameter(FLAG_ENABLED));
+      for (byte i = 0; i < 16; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_ENABLED, i));
+      }
+      output->print(F("Error: "));
+      output->println(getParameter(FLAG_ERROR));
+      for (byte i = 0; i < 10; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_ERROR, i));
+      }
+    case 's':
+      output->print(F("Status: "));
+      output->println(getParameter(FLAG_STATUS));
+      for (byte i = 0; i < 16; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_STATUS, i));
+      }
+    break;
+    case 'e':
+      output->print(F("Enabled: "));
+      output->println(getParameter(FLAG_ENABLED));
+      for (byte i = 0; i < 16; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_ENABLED, i));
+      }
+    break;
+    case 'r':
+      output->print(F("Error: "));
+      output->println(getParameter(FLAG_ERROR));
+      for (byte i = 0; i < 10; i++) {
+        output->print(i);
+        output->print(": ");
+        output->println(getParameterBit(FLAG_ERROR, i));
+      }
+    break;
+    default:
+    printFlagsHelp(output);
+  }
+}
+
+void printFlagsHelp(Print* output) {
+  output->println(F("(ff) All Flags"));
+  output->println(F("(fs) Flag Status"));
+  output->println(F("(fe) Flag Enabled"));
+  output->println(F("(fr) Flag Error"));
+}
+
+void printGeneralParameters(Print* output) {
+  output->print(F("EPOCH:"));
+  output->println(now());
+  output->print(F("millis:"));
+  output->println(millis());
+}
+
+
+//void processUtilitiesCommand(char command, char* paramValue, Print* output) {
+  //switch (command) {
+    //case 'c':
+    //if (paramValue[0] != '\0') {
+      //printCompactParameters(output, atoi(paramValue));
+      //} else {
+      //printCompactParameters(output);
+    //}
+    //break;
+    //case 'e':
+    //if (paramValue[0] != '\0') {
+      //setTime(atol(paramValue));
+      //output->println(now());
+      //} else {
+      //output->println(now());
+    //}
+    //break;
+    //case 'f':
+    ////printFreeMemory(output);
+    //break;
+    //case 'q':
+    //if (paramValue[0] != '\0') {
+      //setQualifier(atoi(paramValue));
+    //}
+    //{
+      //uint16_t a = getQualifier();
+      //output->println(a);
+    //}
+    //break;
+    //case 'r':
+    //if (paramValue[0] != '\0') {
+      //if (atol(paramValue) == 1234) {
+        //resetParameters();
+        //output->println(F("Reset done"));
+      //}
+    //}
+    //else {
+      //output->println(F("To reset enter ur1234"));
+    //}
+    //break;
+    //case 'z':
+    //getStatusEEPROM(output);
+    //break;
+    //default:
+    //printUtilitiesHelp(output);
+  //}
+//}
+//
+//void printUtilitiesHelp(Print* output) {
+  //output->println(F("(uc) Compact settings"));
+  //output->println(F("(ue) Epoch"));
+  //output->println(F("(uf) Free"));
+  //output->println(F("(uq) Qualifier"));
+  //output->println(F("(ur) Reset"));
+  //output->println(F("(uz) eeprom"));
+//}
 
 
 void noThread(Print* output) {
@@ -235,91 +403,9 @@ uint8_t toHex(Print* output, long value) {
   return checkDigit;
 }
 
-void processSpecificCommand(char* data, char* paramValue, Print* output) {
-  switch (data[0]) {
-#ifdef THR_LORA
-    case 'a':
-      //processLoraCommand(data[1], paramValue, output);
-      break;
-#endif
-    case 'i':
-#if defined(GAS_CTRL) || defined(PH_CTRL)
-      //wireInfo(output);
-#else  //not elsif !!
-      noThread(output);
-#endif
-      break;
-#ifdef THR_LINEAR_LOGS
-    case 'l':
-      //processLoggerCommand(data[1], paramValue, output);
-      break;
-#else  //not elsif !!
-      noThread(output);
-#endif
-    case 'o':
-#if defined(TEMP_LIQ) || defined(TEMP_PCB)
-      //oneWireInfo(output);
-#else
-      noThread(output);
-#endif
-      break;
-    case 'p':
-      printGeneralParameters(output);
-      break;
 
-    case 't':
-      output->print(F("Status: "));
-      //output->println(getParameter(PARAM_STATUS));
-      for (byte i = 0; i < 10; i++) {
-        output->print(i);
-        output->print(": ");
-        //output->println(getParameterBit(PARAM_STATUS, i));
-      }
-      output->print(F("Enabled: "));
-      //output->println(getParameter(PARAM_ENABLED));
-      for (byte i = 0; i < 3; i++) {
-        output->print(i);
-        output->print(": ");
-        //output->println(getParameterBit(PARAM_ENABLED, i));
-      }
-      output->print(F("Error: "));
-      //output->println(getParameter(PARAM_ERROR));
-      for (byte i = 0; i < 6; i++) {
-        output->print(i);
-        output->print(": ");
-        //output->println(getParameterBit(PARAM_ERROR, i));
-      }
-      break;
-#ifdef FOOD_CTRL
-    case 'w':
-      //processWeightCommand(data[1], paramValue, output);
-      break;
-#endif
-  }
-}
 
-void printGeneralParameters(Print* output) {
-  output->print(F("EPOCH:"));
-  //output->println(now());
-  output->print(F("millis:"));
-  output->println(millis());
-#ifdef I2C_RELAY_FOOD
-  output->print(F("I2C relay food:"));
-  //output->println(I2C_RELAY_FOOD);
-#endif
-#ifdef FLUX
-  output->print(F("I2C Flux:"));
-  //output->println(I2C_FLUX);
-#endif
-#ifdef THR_LINEAR_LOGS
-  output->print(F("Next log index:"));
-  //output->println(nextEntryID);
-#endif
-#ifdef THR_LINEAR_LOGS
-  output->print(F("FlashID:"));
-  //sst.printFlashID(output);
-#endif
-}
+
 
 
 

@@ -181,7 +181,7 @@
 
 /* FLAG_STATUS */
 #if PARAM_STATUS
-  #define FLAG_STATUS     0   // Currently active services
+  #define FLAG_STATUS             PARAM_STATUS   // Currently active services
   
   #ifdef PRESSURE_SENSOR
     #define FLAG_PRESSURE_CTRL    0
@@ -232,7 +232,7 @@
 
 /* FLAG ENABLED */
 #ifdef PARAM_ENABLED
-  #define FLAG_ENABLED    1   // Enabled service (set by user)
+  #define FLAG_ENABLED                PARAM_ENABLED   // Enabled service (set by user)
   
   #ifdef PRESSURE_SENSOR
     #define FLAG_EN_PRESSURE_CTRL     0
@@ -283,7 +283,7 @@
 
 /* FLAG ERROR */
 #ifdef PARAM_ERROR
-  #define FLAG_ERROR              2  // Error in executed orders.
+  #define FLAG_ERROR                  PARAM_ERROR  // Error in executed orders.
   
   #ifdef PRESSURE_SENSOR
   #define FLAG_ERROR_RANGE_PRESSURE   0
@@ -331,13 +331,27 @@
 void pinPortMode(uint8_t, uint8_t);
 void pinPortWrite(uint8_t, uint8_t);
 
-void printResult(char*, Print*);
-
-void printHelp(Print*);
-void printSpecificHelp(Print*);
-
 void processSpecificCommand(char*, char*, Print*);
 void printGeneralParameters(Print*);
+
+void printResult(char*, Print*);
+
+// Help menu
+void printHelpMenu(Print*);
+void printSpecificHelp(Print*);
+
+// Flags menu
+void processFlagsCommand(char, char*, Print*);
+void printFlagsHelp(Print*);
+void processFlagsCommand(char, char*, Print*);
+
+
+/* PARAMETERS */
+void setAndSaveParameter(byte, int);
+void printParameters(Print*);
+void printParameter(Print*, byte);
+int getParameter(byte);
+boolean getParameterBit(byte, byte);
 
 #define pinPortToBitMask(P) ( pgm_read_byte( pin_port_to_bit_mask_PGM + (P) ) )
 #define pinToPort(P) ( pgm_read_byte( pin_to_port_PGM + (P) ) )
