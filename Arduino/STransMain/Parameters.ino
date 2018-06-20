@@ -11,7 +11,7 @@
 
    We use the EEPROM for saving the parameters
    changed by the user during the functionment
-   of the Bioreactor.
+   of the STrans.
 
    The parameter are loaded during the boot.
 
@@ -22,7 +22,7 @@
 #include <avr/eeprom.h>
 #include "Arduino.h"
 #include "ChNil.h"
-//#include "BioMain.h"
+#include "STransMain.h"
 
 #define MAX_PARAM 26   // If the MAX_PARAM change you need to change the pointer in the EEPROM
 
@@ -97,4 +97,64 @@ boolean getParameterBit(byte number, byte bitToRead) {
   // return (bitRead(parameters[number], bitToRead) == 1) ? true : false;
   return (parameters[number] >> bitToRead ) & 1;
 }
+
+#define ERROR_VALUE  -32768
+
+
+
+void resetParameters() {
+  //int flagEnabled = eeprom_read_word((uint16_t*) EE_START_PARAM + FLAG_ENABLED);
+  
+  // Flag Enabled tiene 2 bytes de banderas
+  int flagEnabled = 0x0000;
+  // Se configuran tanto las banderas como los parámetros en su valor por defecto
+  #ifdef ANALOG_SENSORS
+    // La presión es la variable que se mide por defecto
+    flagEnabled |= (1 << FLAG_EN_PRESSURE_CTRL);
+    setAndSaveParameter(PARAM_PRESSURE, 0);
+    
+    flagEnabled |= (0 << FLAG_EN_ANAG_TEMP_CTRL);
+    setAndSaveParameter(PARAM_ANALOG_TEMP, ERROR_VALUE);
+  #endif
+
+  #ifdef ONE_WIRE_SENSORS
+    // No hay ningún sensor digital one-wire habilitado por defecto
+    flagEnabled |= (0 << FLAG_DIG_TEMP_1_CTRL);
+    flagEnabled |= (0 << FLAG_DIG_TEMP_2_CTRL);
+    flagEnabled |= (0 << FLAG_DIG_TEMP_3_CTRL);
+    flagEnabled |= (0 << FLAG_DIG_TEMP_4_CTRL);
+    flagEnabled |= (0 << FLAG_DIG_HUMI_1_CTRL);
+    
+    setAndSaveParameter(PARAM_DIGITAL_TEMP_1, ERROR_VALUE);
+    setAndSaveParameter(PARAM_DIGITAL_TEMP_2, ERROR_VALUE);
+    setAndSaveParameter(PARAM_DIGITAL_TEMP_3, ERROR_VALUE);
+    setAndSaveParameter(PARAM_DIGITAL_TEMP_4, ERROR_VALUE);
+    setAndSaveParameter(PARAM_DIGITAL_HUMI_1, ERROR_VALUE);
+  #endif
+
+  #ifdef OLED
+    // La pantalla OLED está disponible por defecto
+    flagEnabled |= (1 << FLAG_OLED);
+    
+    setAndSaveParameter(PARAM_OLED, 1);
+  #endif
+  
+  #ifdef BUTTONS
+    // Todos los botones están habilitados por defecto
+    flagEnabled |= (1 << FLAG_BUTTONS);
+    
+    setAndSaveParameter(PARAM_BUTTONS, MASK_BUTTONS);
+  #endif
+
+  #ifdef WIRELESS_COMM
+    // La comunicación LoRa por el módulo Ra-1 está habilitada por defecto
+    flagEnabled |= (0 << FLAG_BLUETOOTH)|(1 << FLAG_LORA_RA1)|(0 << FLAG_LORA_RN2483)|(0 << FLAG_LORA_RN2903);
+    
+    setAndSaveParameter(PARAM_WIRELESS, MASK_WIRELESS & (1 << PARAM_LORA_RA1);  // LoRa Ra-1 Enabled by default
+  #endif
+  
+  // Almacenar el nuevo dato de la bandera de habilitación
+  eeprom_write_word((uint16_t*) EE_START_PARAM + FLAG_ENABLED, flagEnabled);
+}
+
 

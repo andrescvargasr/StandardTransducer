@@ -155,23 +155,37 @@ void printResult(char* data, Print* output) {
     /* ========================================
        GENERAL AND REQUIRED PARAMETERS
       ========================================*/
+    // Bluetooth Menu
+    case 'b':
+      //processBluetooth(data, paramValue, output);
+    break;
+    // Pressure Menu
+    case 'r':
+      //processPressure(data, paramValue, output);
+    break;
+    // Flags Menu
     case 'f':
       processFlagsCommand(data[1], paramValue, output);
     break;
+    // Help Menu
     case 'h':
       printHelpMenu(output);
-      break;
-    //Changed for (p)arameters
-    //case 's':
-      //printParameters(output);
-      //break;
+    break;
+    // LoRa Menu
+    case 'l':
+      //processLora(data, paramValue, output);
+    break;
+    // Parameters Display
     case 'p':
       // Imprimir todos los parámetros según la función en Parameters
       printParameters(output);
     break;
+    case 't':
+      //processTemperature(data, paramValue, output);
+    break;
     case 'u':
       //processUtilitiesCommand(data[1], paramValue, output);
-      break;
+    break;
     default:
       processSpecificCommand(data, paramValue, output);
   }
@@ -180,9 +194,13 @@ void printResult(char* data, Print* output) {
 
 void printHelpMenu(Print* output) {
   //#ifdef SHOW_MENU_HELP
+  output->println(F("b - (b)luetooth"));
+  output->println(F("r - p(r)essure"));
   output->println(F("f - (f)lags"));
   output->println(F("h - (h)elp")); 
+  output->println(F("l - (l)ora"));
   output->println(F("p - (p)arameters"));
+  output->println(F("t - (t)emperature"));
   output->println(F("u - (u)tilities"));
 
   printSpecificHelp(output);
@@ -207,43 +225,10 @@ void printSpecificHelp(Print* output) {
 
 void processSpecificCommand(char* data, char* paramValue, Print* output) {
   switch (data[0]) {
-    #ifdef THR_LORA
-    case 'a':
-    //processLoraCommand(data[1], paramValue, output);
-    break;
-    #endif
     case 'g':
+      // Imprime las variables asociadas al tiempo y los EPOCH del sistema.
       printGeneralParameters(output);
     break;
-
-    case 'n':
-      output->print(F("Status: "));
-      output->println(getParameter(FLAG_STATUS));
-      for (byte i = 0; i < 16; i++) {
-        output->print(i);
-        output->print(": ");
-        output->println(getParameterBit(FLAG_STATUS, i));
-      }
-      output->print(F("Enabled: "));
-      output->println(getParameter(FLAG_ENABLED));
-      for (byte i = 0; i < 3; i++) {
-        output->print(i);
-        output->print(": ");
-        output->println(getParameterBit(FLAG_ENABLED, i));
-      }
-      output->print(F("Error: "));
-      output->println(getParameter(FLAG_ERROR));
-      for (byte i = 0; i < 6; i++) {
-        output->print(i);
-        output->print(": ");
-        output->println(getParameterBit(FLAG_ERROR, i));
-      }
-    break;
-    #ifdef FOOD_CTRL
-    case 'w':
-    //processWeightCommand(data[1], paramValue, output);
-    break;
-    #endif
   }
 }
 
@@ -271,6 +256,7 @@ void processFlagsCommand(char command, char* paramValue, Print* output) {
         output->print(": ");
         output->println(getParameterBit(FLAG_ERROR, i));
       }
+    break;
     case 's':
       output->print(F("Status: "));
       output->println(getParameter(FLAG_STATUS));

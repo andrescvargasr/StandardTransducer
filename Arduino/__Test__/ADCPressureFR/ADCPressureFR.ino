@@ -6,6 +6,9 @@
 #include "ChNil.h"
 #include "ChNilAdcStrans.h"
 
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
 // Use tiny unbuffered ChNilSerial library.
 // Macro to redefine Serial as ChNilSerial.
 // Remove definition to use standard Arduino Serial.
@@ -29,6 +32,8 @@ THD_FUNCTION(Thread1, arg) {
     idleCount = 0;
     uint32_t usec = micros();
     int val = analogRead(0);
+    int over = 0;
+    int adc0 = 0;
     usec = micros() - usec; 
     Serial.print("Arduino:  ");
     Serial.print(usec);
@@ -39,16 +44,48 @@ THD_FUNCTION(Thread1, arg) {
  
     idleCount = 0;    
     usec = micros();
-    chAnalogReferenceSTrans(1); // AVcc with capacitor in AREF
-    chAnalogPrescalarSTrans(6); // Division Factor 64
-    val = chAnalogReadSTrans(4, 5, 40); // A4 y A5 + GAIN 40
+    chAnalogReferenceSTrans(1);
+    chAnalogPrescalarSTrans(6);
+    val = chAnalogReadSTrans(4, 5, 200);
     usec = micros() - usec;
     Serial.print("ChNilAdc: ");
     Serial.print(usec);
     Serial.print(' ');
     Serial.print(val);
     Serial.print(' ');
-    Serial.println(idleCount);  
+    Serial.println(idleCount);
+
+//    val = ADC;
+//    usec = micros() - usec;
+//    Serial.print("ChNilAdc: ");
+//    Serial.print(usec);
+//    Serial.print(' ');
+//    Serial.print(val);
+  
+    over = chSetReadFreeRuningSTrans(4, 5, 200);
+    Serial.print("ChNilAdcFreeRunning1: ");
+    Serial.print(over);
+    Serial.print(' ');    
+    Serial.print(adc0);
+    Serial.print(' ');
+    Serial.println();
+
+    over = 0;
+//    int clo = 14/125000;
+    for(int i=0; i<128; i++) {
+      SET(ADCSRA, ADSC);
+      //SET(ADCSRA, ADIF);
+      chSemWait(&adcSem);
+      over += ADC;
+      
+    }
+    over /= 128;
+    Serial.print("ChNilAdcFreeRunning2: ");
+    Serial.print(over);
+    Serial.print(' ');    
+    Serial.print(adc0);
+    Serial.print(' ');
+
 
     Serial.println();
     chThdSleep(1000);    

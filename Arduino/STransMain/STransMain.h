@@ -171,6 +171,22 @@
   #define MASK_WIRELESS     0b00001111
 #endif
 
+/* 
+ * Parámetro 10 se deja en blanco para identificar los parámetros de 
+ * visualización de los parámetros de ajuste de variables.
+ */
+#ifdef PRESSURE_SENSOR
+  #define PARAM_AT_MAG      11  // L - Magnitud de lectura de presión.
+  #define PARAM_AT_RANGE    12  // M - Rango de lectura de presión.
+  #define PARAM_AT_OFFSET   13  // N - Offset de lectura de presión.
+#endif
+
+#ifdef TEMP_SENSOR
+  #define PARAM_AT_MAG      14  // O - Magnitud de lectura de temperatura.
+  #define PARAM_AT_RANGE    15  // P - Rango de lectura de temperatura.
+  #define PARAM_AT_OFFSET   16  // Q - Offset de lectura de temperatura.
+#endif
+
 #define PARAM_ERROR       23      // X - Errors in system.
 #define PARAM_STATUS      24      // Y - System state.
 #define PARAM_ENABLED     25      // Z - Characteristics enabled/disabled.
@@ -352,6 +368,7 @@ void printParameters(Print*);
 void printParameter(Print*, byte);
 int getParameter(byte);
 boolean getParameterBit(byte, byte);
+void resetParameters();
 
 #define pinPortToBitMask(P) ( pgm_read_byte( pin_port_to_bit_mask_PGM + (P) ) )
 #define pinToPort(P) ( pgm_read_byte( pin_to_port_PGM + (P) ) )

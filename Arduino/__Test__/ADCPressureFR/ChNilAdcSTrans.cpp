@@ -109,7 +109,7 @@ int chAnalogReadSTrans(uint8_t pinP, uint8_t pinN, uint8_t gain) {
 	#if defined(ADMUX)
 	if (gain == 10)
 	{
-		ADMUX = (nil_analog_reference << 6) | (0x09); // REF[1..0] | MUX[4..0]
+		ADMUX = (nil_analog_reference << 6) | (0x09);
 	}
 	if (gain == 40)
 	{
@@ -125,13 +125,74 @@ int chAnalogReadSTrans(uint8_t pinP, uint8_t pinN, uint8_t gain) {
 		// Not idle thread so use interrupt and sleep.
 		ADCSRA |= (1 << ADIE) | (1 << ADSC);
 		chSemWait(&adcSem);
+    ADCSRA |= (1 << ADSC);
+    chSemWait(&adcSem);
 		ADCSRA &= ~(1 << ADIE);
 		} else {
 		ADCSRA |= (1 << ADSC);
 		// ADSC is cleared when the conversion finishes
 		while (ADCSRA & (1 << ADSC));
+   ADCSRA |= (1 << ADSC);
+   // ADSC is cleared when the conversion finishes
+    while (ADCSRA & (1 << ADSC));
 	}
 	// this will access ADCL first.
 	return ADC;
 }
-/** @} */
+
+int chSetReadFreeRuningSTrans(uint8_t pinP, uint8_t pinN, uint8_t gain) {
+  // Use AVCC as the reference for the ADC.
+  SET(ADMUX, REFS0);
+  CLEAR(ADMUX, REFS1);
+
+  // Set the clock divider to 64x.
+  // TODO: Experiment with reducing the divider when logic is in.
+  ADCSRA &= ~ADC_PS_BITS;
+  CLEAR(ADCSRA, ADPS0);
+  SET(ADCSRA, ADPS1);
+  SET(ADCSRA, ADPS2);
+
+  // Specify that we are only interested in ADC1 and ADC0. x200
+  SET(ADMUX, MUX0);
+  SET(ADMUX, MUX1);
+  CLEAR(ADMUX, MUX2);
+  SET(ADMUX, MUX3);
+  CLEAR(ADMUX, MUX4);
+
+  CLEAR(ADCSRB,MUX5);
+
+  
+
+  // Set to free-running mode; the ADC will run continuously.
+  CLEAR(ADCSRB, ADTS0);
+  CLEAR(ADCSRB, ADTS1);
+  CLEAR(ADCSRB, ADTS2);
+  CLEAR(ADCSRB, ADTS3);
+
+  if (!chIsIdleThread()) {
+    //* Free running trigger source */
+    ADCSRB = 0;
+  
+    /* Enable ADC and conversion complete interrupt. Trigger first conversion */
+    ADCSRA = (1 << ADEN) | (1 << ADIE) | (1 << ADATE);
+  
+    /* Trigger first conversion */
+    ADCSRA |= (1 << ADSC);
+    chSemWait(&adcSem);
+    SET(ADCSRA, ADSC);
+    chSemWait(&adcSem);
+    //CLEAR(ADCSRA, ADEN);
+    } else {
+    ADCSRA |= (1 << ADSC);
+    // ADSC is cleared when the conversion finishes
+    while (ADCSRA & (1 << ADSC));
+    ADCSRA |= (1 << ADSC);
+    // ADSC is cleared when the conversion finishes
+    while (ADCSRA & (1 << ADSC));
+  }
+  return ADC;
+
+  // Enable interrupts now everything is configured.
+  // -------------------------------------------------------------------------
+  //sei();
+}

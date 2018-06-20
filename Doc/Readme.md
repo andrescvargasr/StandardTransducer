@@ -24,12 +24,12 @@ A continuación, se presenta la tabla de parámetros con los que se cuenta actua
 | 8  | I | PARAM_OLED           | Estado de la pantalla OLED.              |
 | 9  | J | PARAM_WIRELESS       | Comunicación inalámbrica habilitada.     |
 | 10 | K |                      |                                          |
-| 11 | L |                      |                                          |
-| 12 | M |                      |                                          |
-| 13 | N |                      |                                          |
-| 14 | O |                      |                                          |
-| 15 | P |                      |                                          |
-| 16 | Q |                      |                                          |
+| 11 | L | PARAM_P_MAG          | Magnitud de lectura de presión.          |
+| 12 | M | PARAM_P_RANGE        | Rango de lectura de presión.             |
+| 13 | N | PARAM_P_OFFSET       | _Offset_ del sensor de presión.          |
+| 14 | O | PARAM_AT_MAG         | Magnitud de lectura de la temperatura.   |
+| 15 | P | PARAM_AT_RANGE       | Rango de lectura de la temperatura.      |
+| 16 | Q | PARAM_AT_OFFSET      | _Offset_ del sensor de temperatura.      |
 | 17 | R |                      |                                          |
 | 18 | S |                      |                                          |
 | 19 | T |                      |                                          |
@@ -42,9 +42,9 @@ A continuación, se presenta la tabla de parámetros con los que se cuenta actua
 
 Cada uno de estos parámetros se encargan de presentar el estado actual de cada una de las opciones disponibles en el sistema; además, las últimas opciones se encargan de presentar un compendio que incluye los errores producidos durante el funcionamiento del transductor (**PARAM_ERROR**), el estado de todas las variables sensibles para el usuario (**PARAM_STATUS**) y la posibilidad de identificar cuáles características se encuentran actualmente habilitadas (**PARAM_ENABLED**).
 
-Existen dos casos especiales de parámetros, **PARAM_BUTTONS** y **PARAM_WIRELESS**, los cuales representan el estado de varias opciones, de modo que **PARAM_BUTTONS** entrega los estados de los botones _Z+_, _Z-_, _S+_ y _S-_, y **PARAM_WIRELESS** entrega la disponibilidad de los sitemas de comunicación _Bluetooth_, _LoRa-Ra1_, _LoRa-RN2483_ y _LoRa-RN2903_; todo esto implica que si los botones están disponibles o algún tipo de comunicación, estos parámetros entregarán un 1 según su posición, siguiendo la tabla a continuación:
+Existen algunos casos especiales de parámetros, **PARAM_BUTTONS** y **PARAM_WIRELESS**, los cuales representan el estado de varias opciones, de modo que **PARAM_BUTTONS** entrega los estados de los botones _Z+_, _Z-_, _S+_ y _S-_, y **PARAM_WIRELESS** entrega la disponibilidad de los sitemas de comunicación _Bluetooth_, _LoRa-Ra1_, _LoRa-RN2483_ y _LoRa-RN2903_; todo esto implica que si los botones están disponibles o algún tipo de comunicación, estos parámetros entregarán un 1 según su posición, siguiendo la tabla a continuación:
 
-| PARAM_BUTTONS | Bit | Botón activado en PARAM_BUTTONS |
+| PARAM_BUTTONS | Bit | Botón activado en PARAM_BUTTONS   |
 | ------------- | --- | --------------------------------- |
 | PARAM_S_P     | 0   | 0b00000001                        |
 | PARAM_S_N     | 1   | 0b00000010                        |
@@ -57,6 +57,29 @@ Existen dos casos especiales de parámetros, **PARAM_BUTTONS** y **PARAM_WIRELES
 | PARAM_LORA_RA1    | 1   | 0b00000010                               |
 | PARAM_LORA_RN2483 | 2   | 0b00000100                               |
 | PARAM_LORA_RN2903 | 3   | 0b00001000                               |
+
+También se debe describir el valor que se entrega para los parámetros asociados a la temperatura y la presión, como son el caso de **PARAM_P_MAG**, **PARAM_P_RANGE**, **PARAM_P_OFFSET** para presión y **PARAM_AT_MAG**, **PARAM_AT_RANGE** y **PARAM_AT_OFFSET** los de la temperatura análoga.
+
+| Parámetro        | Descripción                                  |
+| PARAM_P_MAG      | Indica la magnitud de la lectura de presión. |
+| 0                | Pascal (Pa).                                 |
+| 1                | Kilo Pascal (kPa).                           |
+| 2                | Libra de fuerza por pulgada cuadrada (psi).  |
+| 3                | Milímetros de agua (mmH2O).                  |
+| PARAM_P_RANGE    | Indica el rango de medición del sensor.      |
+| 0                | 0 hasta 50 kPa (0 hasta 7.25 psi).           |
+| 1                | 0 hasta 700 kPa (0 hasta 101.5 psi).         |
+| PARAM_P_OFFSET   | Indica el valor _Offset_ para la presión.    |
+
+| Parámetro        | Descripción                                      |
+| PARAM_AT_MAG     | Indica la magnitud de la lectura de temperatura. |
+| 0                | Grados Celsius (°C).                             |
+| 1                | Grados Farenheit (°F).                           |
+| PARAM_P_RANGE    | Indica el rango de medición del sensor.          |
+| 0                | -212 hasta +850 °C (-331 hasta +1562 °F).        |
+| 1                | -202 hasta +631 °C (-331 hasta +1168 °F).        |
+| 2                | 0 hasta +100 °C (+32 hasta +212 °F).             |
+| PARAM_P_OFFSET   | Indica el valor _Offset_ para la temperatura.    |
 
 #### Estado del transductor
 
