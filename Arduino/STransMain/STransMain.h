@@ -18,15 +18,14 @@
 //#include <SPI.h>    //Flash SPI       (_SPI_H_INCLUDED)
 //#include <avr/wdt.h>  //Watchdog        (_AVR_WDT_H_)
 
-#define SHOW_MENU_HELP 1 // if we don't show the help we spare a lot of memory
 /************************************************************************/
 /* CARACTERISTICS                                                       */
 /************************************************************************/
 #define SERIAL
 //#define PRESSURE_SENSOR   // MPX53D pressure sensor
-//#define TEMP_SENSOR        // PT100 temperature sensor
+#define TEMP_SENSOR        // PT100 temperature sensor
 //#define ONE_WIRE_SENSORS  // DS18B20 temperature sensor
-//#define OLED              // 128x32 OLED display with I2C communication
+#define OLED              // 128x32 OLED display with I2C communication
 //#define BUTTONS           // Resistive buttons
 //#define BLUETOOTH         // BLE
 //#define LORA
@@ -186,6 +185,9 @@
   #define PARAM_AT_RANGE    15  // P - Rango de lectura de temperatura.
   #define PARAM_AT_OFFSET   16  // Q - Offset de lectura de temperatura.
 #endif
+
+/* Mostrar comunicación Serial (esto daña la comunicación OLED */
+#define SHOW_MENU_HELP 22 // if we don't show the help we spare a lot of memory
 
 #define PARAM_ERROR       23      // X - Errors in system.
 #define PARAM_STATUS      24      // Y - System state.

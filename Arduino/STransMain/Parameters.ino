@@ -109,12 +109,17 @@ void resetParameters() {
   int flagEnabled = 0x0000;
   // Se configuran tanto las banderas como los parámetros en su valor por defecto
   #ifdef ANALOG_SENSORS
-    // La presión es la variable que se mide por defecto
-    flagEnabled |= (1 << FLAG_EN_PRESSURE_CTRL);
-    setAndSaveParameter(PARAM_PRESSURE, 0);
     
-    flagEnabled |= (0 << FLAG_EN_ANAG_TEMP_CTRL);
-    setAndSaveParameter(PARAM_ANALOG_TEMP, ERROR_VALUE);
+    #ifdef PRESSURE_SENSOR
+      // La presión es la variable que se mide por defecto
+      flagEnabled |= (1 << FLAG_EN_PRESSURE_CTRL);
+      setAndSaveParameter(PARAM_PRESSURE, 0);
+    #endif
+
+    #ifdef TEMP_SENSOR
+      flagEnabled |= (0 << FLAG_EN_ANAG_TEMP_CTRL);
+      setAndSaveParameter(PARAM_ANALOG_TEMP, ERROR_VALUE);
+    #endif
   #endif
 
   #ifdef ONE_WIRE_SENSORS

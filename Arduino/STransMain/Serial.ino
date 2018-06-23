@@ -1,4 +1,4 @@
-/************************************************************************/
+ /************************************************************************/
 /* Thread 2. Print Serial.                                              */
 /************************************************************************/
 #ifdef SERIAL
@@ -16,13 +16,13 @@ byte serialBufferPosition = 0;
 THD_WORKING_AREA(waSerial, 64);
 
 // Declare thread function for thread 2.
-THD_FUNCTION(ThrSerial, arg) {
+THD_FUNCTION(ThSerial, arg) {
   (void)arg;
 
   Serial.begin(9600);
-  while (!Serial) {
-    chThdSleepMilliseconds(1); // wait for serial port to connect. Needed for native USB port only
-  }
+//  while (!Serial) {
+//    chThdSleepMilliseconds(1); // wait for serial port to connect. Needed for native USB port only
+//  }
 
   // Wake time for thread sleep.
   //systime_t wakeTime = chVTGetSystemTimeX();
@@ -61,8 +61,11 @@ THD_FUNCTION(ThrSerial, arg) {
       }
     }
     // Liberar el semáforo para la pantalla OLED
+//    uint8_t oldSREG = SREG;
+    Serial.flush();
     chSemSignal(&oneSlot);
-    chThdSleepMilliseconds(1);
+//    SREG = oldSREG;
+    chThdSleepMilliseconds(100);
   }
 }
 
@@ -131,7 +134,7 @@ void printResult(char* data, Print* output) {
       if (paramCurrent > 0) {
         // Verificar si entró un nuevo dato para almacenar.
         if (paramValuePosition > 0) {
-          setAndSaveParameter(paramCurrent - 1, atoi(paramValue));
+          (paramCurrent - 1, atoi(paramValue));
           output->println(parameters[paramCurrent - 1]);
         }
         else output->println(parameters[paramCurrent - 1]);
@@ -159,10 +162,6 @@ void printResult(char* data, Print* output) {
     case 'b':
       //processBluetooth(data, paramValue, output);
     break;
-    // Pressure Menu
-    case 'r':
-      //processPressure(data, paramValue, output);
-    break;
     // Flags Menu
     case 'f':
       processFlagsCommand(data[1], paramValue, output);
@@ -179,6 +178,10 @@ void printResult(char* data, Print* output) {
     case 'p':
       // Imprimir todos los parámetros según la función en Parameters
       printParameters(output);
+    break;
+    // Pressure Menu
+    case 'r':
+      //processPressure(data, paramValue, output);
     break;
     case 't':
       //processTemperature(data, paramValue, output);
@@ -388,29 +391,5 @@ uint8_t toHex(Print* output, long value) {
   checkDigit ^= toHex(output, (int)(value >> 0 & 65535));
   return checkDigit;
 }
-
-
-
-
-
-
-
-
-/************************************************************************/
-/* Threads static table, one entry per thread.  A thread's priority is  */
-/* determined by its position in the table with highest priority first. */
-/*                                                                      */
-/* These threads start with a null argument.  A thread's name may also  */
-/* be null to save RAM since the name is currently not used.            */
-/************************************************************************/
-// THD_TABLE_ENTRY(waThread1, "thread1", Thread1, NULL) Name is not necessary
-THD_TABLE_BEGIN
-#ifdef THR_SERIAL
-THD_TABLE_ENTRY(waSerial, NULL, ThrSerial, NULL)
-#endif
-#ifdef THR_OLED
-THD_TABLE_ENTRY(waOLED, NULL, ThrOLED, NULL)
-#endif
-THD_TABLE_END
 
 #endif

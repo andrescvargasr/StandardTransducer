@@ -10,7 +10,14 @@
 #include "ChNil.h"
 //#include "Parameters.h"
 #include "OLED.h"
+//#include "PT100.h"
 
+//OLED
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+Adafruit_SSD1306 display(OLED_RESET);
 
 volatile uint16_t count = 0;
 
@@ -20,10 +27,25 @@ volatile uint16_t count = 0;
 // OLED, de modo que no genere conflictos entre ellas.
 SEMAPHORE_DECL(oneSlot, 1);
 
+// Este semaforo permite controlar el acceso a la variable Pressure
+// tanto desde THR_OLED como de THR_PRESSURE.
+SEMAPHORE_DECL(adcPSem,0);
+
+// Este semaforo controla la espera hasta que termina la lectura ADC.
+SEMAPHORE_DECL(adcSem, 0);
+
+float temperature;
 /************************************************************************/
 /* SETUP                                                                */
 /************************************************************************/
 void setup() {
+  Serial.begin(9600);
+  OLED_INIT;  // PORTD5 set OUTPUT
+  OLED1;      // PORTD5 set LOW becuase is connect to MOSFET-P.
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.display();
+  //display.clearDisplay();
+  //display.display();
     //chFillStacks();
     // Start ChiNil RTOS.
     chBegin();
