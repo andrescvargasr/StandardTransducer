@@ -61,6 +61,7 @@ Existen algunos casos especiales de parámetros, **PARAM_BUTTONS** y **PARAM_WIR
 También se debe describir el valor que se entrega para los parámetros asociados a la temperatura y la presión, como son el caso de **PARAM_P_MAG**, **PARAM_P_RANGE**, **PARAM_P_OFFSET** para presión y **PARAM_AT_MAG**, **PARAM_AT_RANGE** y **PARAM_AT_OFFSET** los de la temperatura análoga.
 
 | Parámetro        | Descripción                                  |
+| ---------------- | -------------------------------------------- |
 | PARAM_P_MAG      | Indica la magnitud de la lectura de presión. |
 | 0                | Pascal (Pa).                                 |
 | 1                | Kilo Pascal (kPa).                           |
@@ -72,6 +73,7 @@ También se debe describir el valor que se entrega para los parámetros asociado
 | PARAM_P_OFFSET   | Indica el valor _Offset_ para la presión.    |
 
 | Parámetro        | Descripción                                      |
+| ---------------- | ------------------------------------------------ |
 | PARAM_AT_MAG     | Indica la magnitud de la lectura de temperatura. |
 | 0                | Grados Celsius (°C).                             |
 | 1                | Grados Farenheit (°F).                           |
