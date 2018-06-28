@@ -35,7 +35,7 @@ A continuación, se presenta la tabla de parámetros con los que se cuenta actua
 | 19 | T |                      |                                          |
 | 20 | U |                      |                                          |
 | 21 | V |                      |                                          |
-| 22 | W |                      |                                          |
+| 22 | W | PARAM_SERIAL_DISPLAY | Habilita/deshabilita resumen en serial.  |
 | 23 | X | PARAM_ERROR          | Errores producidos en la ejecución.      |
 | 24 | Y | PARAM_STATUS         | Estados del sistema.                     |
 | 25 | Z | PARAM_ENABLED        | Características disponibles del sistema. |

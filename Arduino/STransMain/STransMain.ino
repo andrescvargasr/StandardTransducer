@@ -12,14 +12,14 @@
 #include "OLED.h"
 //#include "PT100.h"
 
-//OLED
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+/* OLED display */
+#ifdef OLED
+  #include <Wire.h>
+  #include <Adafruit_GFX.h>
+  #include <Adafruit_SSD1306.h>
 
-Adafruit_SSD1306 display(OLED_RESET);
-
-volatile uint16_t count = 0;
+  Adafruit_SSD1306 display(OLED_RESET);
+#endif  // _OLED_
 
 // Declare and initialize a semaphore for limiting access to one region.
 // Mutexes aren't available for ChiNil RTOS, is available for ChiRT.
@@ -34,21 +34,41 @@ SEMAPHORE_DECL(adcPSem,0);
 // Este semaforo controla la espera hasta que termina la lectura ADC.
 SEMAPHORE_DECL(adcSem, 0);
 
-float temperature;
+volatile float temperature = 25.00;
+volatile float pressure = 0.00;
 /************************************************************************/
 /* SETUP                                                                */
 /************************************************************************/
 void setup() {
   Serial.begin(9600);
-  OLED_INIT;  // PORTD5 set OUTPUT
-  OLED1;      // PORTD5 set LOW becuase is connect to MOSFET-P.
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display.display();
-  //display.clearDisplay();
-  //display.display();
-    //chFillStacks();
-    // Start ChiNil RTOS.
-    chBegin();
+
+  /* OLED display */
+  #ifdef OLED
+    OLED_INIT;  // PORTD5 set OUTPUT
+    OLED1;      // PORTD5 set LOW because is connect to MOSFET-P.
+    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    display.clearDisplay();
+    display.display();
+    //display.display();
+
+//    display.setTextSize(2);
+//    display.setTextColor(WHITE);
+//    display.setCursor(0,0);
+//    display.println("Pressure: 99.99 kPa");
+//    display.setTextColor(BLACK, WHITE); // 'inverted' text
+//    display.println("3.141592");
+//    display.setTextSize(2);
+//    display.setTextColor(WHITE);
+//    display.println("0x"); 
+//    display.display();
+//    delay(2000);
+//    display.clearDisplay();
+//    display.display();
+  #endif  // _OLED_
+  
+  chFillStacks();
+  // Start ChiNil RTOS.
+  chBegin();
 }
 
 /************************************************************************/

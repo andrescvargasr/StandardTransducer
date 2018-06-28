@@ -36,6 +36,9 @@ THD_FUNCTION(ThSerial, arg) {
   {
     // Preguntar si no se está usando la pantalla OLED
     chSemWait(&oneSlot);
+    // Print unused stack for thread 1, thread 2, and idle thread.
+    chPrintUnusedStack(&Serial);
+    Serial.println();
     while (Serial.available()) {
       // get the new byte:
       char inChar = (char)Serial.read();
@@ -134,7 +137,7 @@ void printResult(char* data, Print* output) {
       if (paramCurrent > 0) {
         // Verificar si entró un nuevo dato para almacenar.
         if (paramValuePosition > 0) {
-          (paramCurrent - 1, atoi(paramValue));
+          setAndSaveParameter(paramCurrent - 1, atoi(paramValue));
           output->println(parameters[paramCurrent - 1]);
         }
         else output->println(parameters[paramCurrent - 1]);

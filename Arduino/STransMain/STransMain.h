@@ -23,7 +23,7 @@
 /************************************************************************/
 #define SERIAL
 //#define PRESSURE_SENSOR   // MPX53D pressure sensor
-#define TEMP_SENSOR        // PT100 temperature sensor
+//#define TEMP_SENSOR        // PT100 temperature sensor
 //#define ONE_WIRE_SENSORS  // DS18B20 temperature sensor
 #define OLED              // 128x32 OLED display with I2C communication
 //#define BUTTONS           // Resistive buttons
@@ -175,9 +175,9 @@
  * visualización de los parámetros de ajuste de variables.
  */
 #ifdef PRESSURE_SENSOR
-  #define PARAM_AT_MAG      11  // L - Magnitud de lectura de presión.
-  #define PARAM_AT_RANGE    12  // M - Rango de lectura de presión.
-  #define PARAM_AT_OFFSET   13  // N - Offset de lectura de presión.
+  #define PARAM_P_MAG      11  // L - Magnitud de lectura de presión.
+  #define PARAM_P_RANGE    12  // M - Rango de lectura de presión.
+  #define PARAM_P_OFFSET   13  // N - Offset de lectura de presión.
 #endif
 
 #ifdef TEMP_SENSOR

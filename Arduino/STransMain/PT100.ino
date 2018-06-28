@@ -59,13 +59,8 @@ volatile uint8_t adc_conversion_done = 0;
 int a = setP(PARAM_AT_MAG,40);
 int b = setP2(SHOW_MENU_HELP,1);
 int showSerial;
-//int a = setP(PARAM_AT_MAG, 10);
 int paramATMag = eeprom_read_word(PARAM_AT_MAG);
-//byte paramATMag = EEPROM.read(PARAM_AT_MAG);
-//EEPROM.write(PARAM_AT_MAG,40);
-//paramATMag = 
-//EEPROM.put(PARAM_AT_MAG,40);
-//EEPROM.get(PARAM_AT_MAG,paramATMag);
+
 
 int setP(byte number, int value) {
   //The address of the parameter is given by : EE_START_PARAM+number*2

@@ -31,7 +31,7 @@ SEMAPHORE_DECL(adcSem, 0);
 
 
 /* ADC1 & ADC0 are V+ & V- respectively input for differential ADC. */
-#define ADC_MUX_SETTING 0x0B
+#define ADC_MUX_SETTING 0x09
 // Oversampling 256
 #define BUFFER_SIZE 257 // +1 because value 0 is not precise.
 
@@ -105,6 +105,14 @@ THD_FUNCTION(Thread1, arg) {
     Serial.println(adcR);
     adcR = adcR/(BUFFER_SIZE - 1);
     Serial.println(adcR);
+
+    Serial.print("Vin: ");
+    float vin = adcR*(3310.0)/((float)10*512.0);
+    Serial.print(vin);    
+    Serial.println(" mV");
+    float pressure = (float)adcR/(5120.0*0.4);
+    Serial.print(pressure,8);
+    Serial.println(" kPa");
 
     delay(1000);
   
