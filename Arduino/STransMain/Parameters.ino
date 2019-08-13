@@ -60,6 +60,11 @@
 
 int parameters[MAX_PARAM];
 
+void setupParameters() {
+  //We copy all the value in the parameters table
+  eeprom_read_block((void*)parameters, (const void*)EE_START_PARAM, MAX_PARAM * 2);
+}
+
 /*
   This will take time, around 4 ms
   This will also use the EEPROM that is limited to 100000 writes

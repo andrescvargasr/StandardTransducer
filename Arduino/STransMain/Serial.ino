@@ -37,8 +37,8 @@ THD_FUNCTION(ThSerial, arg) {
     // Preguntar si no se está usando la pantalla OLED
     chSemWait(&oneSlot);
     // Print unused stack for thread 1, thread 2, and idle thread.
-    chPrintUnusedStack(&Serial);
-    Serial.println();
+//    chPrintUnusedStack(&Serial);
+//    Serial.println();
     while (Serial.available()) {
       // get the new byte:
       char inChar = (char)Serial.read();

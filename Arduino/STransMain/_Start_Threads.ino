@@ -7,9 +7,9 @@
 /************************************************************************/
 // THD_TABLE_ENTRY(waThread1, "thread1", Thread1, NULL) Name is not necessary
 THD_TABLE_BEGIN
-//#ifdef THR_PRESSURE
-//  THD_TABLE_ENTRY(waPressure, NULL, ThPressure, NULL)
-//#endif  // THR_PRESSURE
+#ifdef THR_PRESSURE
+  THD_TABLE_ENTRY(waPressure, NULL, ThPressure, NULL)
+#endif  // THR_PRESSURE
 //#ifdef THR_PT100
 //  THD_TABLE_ENTRY(waPT100, NULL, ThPT100, NULL)
 //#endif  // THR_PT100

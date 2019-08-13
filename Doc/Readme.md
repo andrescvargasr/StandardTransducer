@@ -74,7 +74,7 @@ También se debe describir el valor que se entrega para los parámetros asociado
 
 | Parámetro        | Descripción                                      |
 | ---------------- | ------------------------------------------------ |
-| PARAM_AT_MAG     | Indica la magnitud de la lectura de temperatura. |
+| PARAM_P_MAG      | Indica la magnitud de la lectura de temperatura. |
 | 0                | Grados Celsius (°C).                             |
 | 1                | Grados Farenheit (°F).                           |
 | PARAM_P_RANGE    | Indica el rango de medición del sensor.          |

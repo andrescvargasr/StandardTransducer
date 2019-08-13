@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.0.0">
+<eagle version="8.6.3">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -20576,7 +20576,7 @@ conectar un bluetooth.</text>
 conocer cuál LoRa está conectado, si 
 es LoRa Ra-1, no se debe soldar, en 
 caso opuesto es el  LoRa RN2483.</text>
-<text x="236.22" y="17.78" size="1.778" layer="91">Al conectar el voltaje de salida del sensor a un 
+<text x="226.06" y="22.86" size="1.778" layer="91">Al conectar el voltaje de salida del sensor a un 
 seguidor de voltaje con alta impedancia, evitamos 
 que el sensor deba entragar corriente y cambiar 
 la lectura de este.</text>
@@ -20660,7 +20660,7 @@ otra fuente de voltaje no superior a 6 V.</text>
 <instance part="R16" gate="G$1" x="340.36" y="231.14" rot="R180"/>
 <instance part="R18" gate="G$1" x="347.98" y="241.3" rot="R90"/>
 <instance part="Q3" gate="G$1" x="353.06" y="228.6"/>
-<instance part="IC2" gate="A" x="259.08" y="38.1"/>
+<instance part="IC2" gate="A" x="248.92" y="43.18"/>
 <instance part="IC2" gate="B" x="190.5" y="25.4" rot="MR180"/>
 <instance part="IC2" gate="P" x="236.22" y="73.66" rot="R90"/>
 <instance part="Q1" gate="G$1" x="205.74" y="22.86"/>
@@ -21332,16 +21332,16 @@ otra fuente de voltaje no superior a 6 V.</text>
 <label x="281.94" y="187.96" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="269.24" y1="38.1" x2="269.24" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="269.24" y1="30.48" x2="246.38" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="246.38" y1="30.48" x2="246.38" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="269.24" y1="38.1" x2="271.78" y2="38.1" width="0.1524" layer="91"/>
-<label x="271.78" y="38.1" size="1.778" layer="95"/>
+<wire x1="259.08" y1="43.18" x2="259.08" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="35.56" x2="236.22" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="35.56" x2="236.22" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="43.18" x2="261.62" y2="43.18" width="0.1524" layer="91"/>
+<label x="261.62" y="43.18" size="1.778" layer="95"/>
 <pinref part="IC2" gate="A" pin="-IN"/>
-<wire x1="251.46" y1="35.56" x2="246.38" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="241.3" y1="40.64" x2="236.22" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="IC2" gate="A" pin="OUT"/>
-<wire x1="266.7" y1="38.1" x2="269.24" y2="38.1" width="0.1524" layer="91"/>
-<junction x="269.24" y="38.1"/>
+<wire x1="256.54" y1="43.18" x2="259.08" y2="43.18" width="0.1524" layer="91"/>
+<junction x="259.08" y="43.18"/>
 </segment>
 </net>
 <net name="V_USB" class="1">
@@ -21752,8 +21752,8 @@ otra fuente de voltaje no superior a 6 V.</text>
 </segment>
 <segment>
 <pinref part="IC2" gate="A" pin="+IN"/>
-<wire x1="251.46" y1="40.64" x2="243.84" y2="40.64" width="0.1524" layer="91"/>
-<label x="243.84" y="40.64" size="1.778" layer="95" rot="MR0"/>
+<wire x1="241.3" y1="45.72" x2="233.68" y2="45.72" width="0.1524" layer="91"/>
+<label x="233.68" y="45.72" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="RA1/2483" class="0">

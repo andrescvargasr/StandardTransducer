@@ -36,10 +36,13 @@ SEMAPHORE_DECL(adcSem, 0);
 
 volatile float temperature = 25.00;
 volatile float pressure = 0.00;
+
+volatile uint16_t counterADC = 0;
 /************************************************************************/
 /* SETUP                                                                */
 /************************************************************************/
 void setup() {
+  setupParameters();
   Serial.begin(9600);
 
   /* OLED display */

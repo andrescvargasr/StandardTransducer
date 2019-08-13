@@ -30,60 +30,41 @@
 
 // ThPT100 sleeps while the ADC is active.
 
-#include <avr/io.h>
+//#include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/eeprom.h>
-#include <EEPROM.h>
+//#include <EEPROM.h>
 
 //SEMAPHORE_DECL(adcSem, 0);
 
 /* ADC6 & ADC1 are V+ & V- respectively input for differential ADC. 
- * Gain x200.
+ * Gain x200 or x40.
  */
 //ADC1 x200 MUX5 1 | MUX[4..0] 11110
 #define ADC_TEMP_MUXx200 0x1E
 //ADC1 x40 MUX5 1 | MUX[4..0] 10110
 #define ADC_TEMP_MUXx40 0x16
 //ADC1 x10 MUX5 1 | MUX[4..0] 01110
-#define ADC_TEMP_MUXx10 0x0E
+//#define ADC_TEMP_MUXx10 0x0E
 // Oversampling 256
 #define BUFFER_SIZE 257 // +1 because value 0 is not precise.
 
-uint16_t adc_results[BUFFER_SIZE];
-double adcR = 0;
-volatile uint16_t adc_results_index = 0;
-volatile uint8_t adc_conversion_done = 0;
-//double temperature;
+volatile uint16_t adc_results = 0;
 
-//EEPROM.write(PARAM_AT_MAG,40);
-int a = setP(PARAM_AT_MAG,40);
-int b = setP2(SHOW_MENU_HELP,1);
-int showSerial;
-int paramATMag = eeprom_read_word(PARAM_AT_MAG);
-
-
-int setP(byte number, int value) {
-  //The address of the parameter is given by : EE_START_PARAM+number*2
-  eeprom_write_word((uint16_t*) 0 + number, value);
-  return 1;
-}
-
-int setP2(int number, byte value) {
-  //The address of the parameter is given by : EE_START_PARAM+number*2
-  EEPROM.write(number, value);
-  return 1;
-}
+byte showSerial;
+byte paramATMag = 40;
 
 ISR(ADC_vect)
 {
-  
   CH_IRQ_PROLOGUE();
   chSysLockFromISR();
-  adc_results[adc_results_index++] = ADC;
+  if(counterADC > 0)
+    adc_results += ADC;
 
-  if (adc_results_index >= BUFFER_SIZE) {
-    adc_results_index = 0;
-    adc_conversion_done = 1;
+  counterADC++;
+
+  if (counterADC >= BUFFER_SIZE) {
+    counterADC = 0;
     /* Disable ADC and clear interrupt flag. we are done */
     ADCSRA = 0;
     ADCSRA = (1 << ADIF);
@@ -100,8 +81,8 @@ static void setup_adc_freerunning_mode(void)
     ADMUX = (1 << REFS0) | (ADC_TEMP_MUXx200);
   else if (paramATMag == 40)
     ADMUX = (1 << REFS0) | (ADC_TEMP_MUXx40);
-  else 
-    ADMUX = (1 << REFS0) | (ADC_TEMP_MUXx10);
+//  else 
+//    ADMUX = (1 << REFS0) | (ADC_TEMP_MUXx10);
 
   /* Free running trigger source */
   ADCSRB = 0;
@@ -122,16 +103,14 @@ static void setup_adc_freerunning_mode(void)
 
 //-----------------------------------------------------------------------------
 // Declare a stack with 64 bytes beyond context switch and interrupt needs.
-THD_WORKING_AREA(waPT100, 64);
+THD_WORKING_AREA(waPT100, 32);
 
 // Declare thread function for thread 1.
 THD_FUNCTION(ThPT100, arg) {
   (void)arg;
-  //paramATMag = EEPROM.read(PARAM_AT_MAG);
-  //showSerial = EEPROM.read(SHOW_MENU_HELP*2);
-  paramATMag = eeprom_read_word(PARAM_AT_MAG);
-  showSerial = eeprom_read_word((const uint16_t *) 0 + SHOW_MENU_HELP);
-  //Serial.begin(9600);
+  counterADC = 0;
+  paramATMag = eeprom_read_byte((uint8_t )PARAM_AT_MAG*2);
+  showSerial = eeprom_read_byte((uint8_t )SHOW_MENU_HELP*2);
   temperature = 1;
 
   while (TRUE) {
@@ -148,9 +127,6 @@ THD_FUNCTION(ThPT100, arg) {
     /* Set VOPA pin as output and LOW for P-MOSFET in AVCC to AVCCOPA */
     VOPA_INIT;
     VOPA1;
-    
-    /* Enable interrupts */
-    //sei();
   
     /* Do BUFFER_SIZE conversions using the free running mode */
     setup_adc_freerunning_mode();
@@ -161,16 +137,9 @@ THD_FUNCTION(ThPT100, arg) {
     /* Set off VOPA */
     VOPA0;
 
-    //temperature++;
-
-    adcR = 0;
-    for(int i = 1; i < BUFFER_SIZE; i++) {
-      adcR += adc_results[i];
-    }
-
-    adcR = adcR/(BUFFER_SIZE-1);
+    adc_results = adc_results/(BUFFER_SIZE-1);
     //Serial.print("Pressure: ");
-    float vin = adcR*(3310.0)/((float)paramATMag*512.0);
+    float vin = adc_results*(3310.0)/((float)paramATMag*512.0);
 
     if (showSerial == 1) {
       Serial.println("Mag: ");
@@ -197,13 +166,12 @@ THD_FUNCTION(ThPT100, arg) {
       Serial.print(temperature,8);
       Serial.println(" °T");
     }
-   
-    /* Reset conversion done flag */
-    adc_conversion_done = 0;
-//
+
+    /* Set to zero ADC variable */
+    adc_results = 0;
+    
     chSemSignal(&oneSlot);
     chThdSleepSeconds(10);
-    
   }
 }
 #endif // TEMP_SENSOR
