@@ -74,14 +74,14 @@ También se debe describir el valor que se entrega para los parámetros asociado
 
 | Parámetro        | Descripción                                      |
 | ---------------- | ------------------------------------------------ |
-| PARAM_P_MAG      | Indica la magnitud de la lectura de temperatura. |
+| PARAM_AT_MAG     | Indica la magnitud de la lectura de temperatura. |
 | 0                | Grados Celsius (°C).                             |
 | 1                | Grados Farenheit (°F).                           |
-| PARAM_P_RANGE    | Indica el rango de medición del sensor.          |
+| PARAM_AT_RANGE   | Indica el rango de medición del sensor.          |
 | 0                | -212 hasta +850 °C (-331 hasta +1562 °F).        |
 | 1                | -202 hasta +631 °C (-331 hasta +1168 °F).        |
 | 2                | 0 hasta +100 °C (+32 hasta +212 °F).             |
-| PARAM_P_OFFSET   | Indica el valor _Offset_ para la temperatura.    |
+| PARAM_AT_OFFSET  | Indica el valor _Offset_ para la temperatura.    |
 
 #### Estado del transductor
 
